@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKARLACTF - Login</title>
+    <script src="script.js"></script>
+</head>
+<body>
+    <section class="login">
+        <div class="login-page">
+            <img class="images" src="/assets/images/aus.png" alt="skarla">
+
+            <!-- LAYAR 1: WELCOME (Pilihan Pertama) -->
+            <div id="welcome-screen">
+                <h1 class="title-login">Get Power.</h1>
+                <p class="title2-login">Wherever, Whenever.</p>
+
+                <div class="login-group">
+                    <button class="login-submit" onclick="showLogin()">Login <i class="ri-arrow-right-circle-fill"></i></button>
+                    <button class="login-submit" style="background: transparent; border: 1.5px solid rgb(2, 171, 255); color: white;">Register <i class="ri-user-add-fill"></i></button>
+                </div>
+            </div>
+
+            <!-- LAYAR 2: LOGIN FORM (Kode Asli Kamu) -->
+            <div id="login-screen" style="display: none; opacity: 0;">
+                <h1 class="title-login">Welcome back!</h1>
+                <p class="title2-login">Login to continue your hacking journey</p>
+                <form action="#" method="post">
+                    <div class="login-group">
+                        <div class="login-user">
+                            <p class="subtitle">Username</p>
+                            <i class="ri-shield-user-fill icon-login"></i>
+                            <input type="text" required placeholder=" " name="username" class="login-users" oninvalid="this.setCustomValidity('Username mu kosong kocak')" oninput="this.setCustomValidity('')">
+                            <label for="text" class="login-label">Username</label>
+                        </div>
+                        <div class="login-pswd">
+                            <p class="subtitle">Password</p>
+                            <i class="ri-lock-password-fill icon-login"></i>
+                            <input type="password" required placeholder=" " name="password" class="login-users">
+                            <label for="password" class="login-label">Password</label>
+                        </div>
+
+                        <?php if ($error_msg): ?>
+                            <div class="alert alert-danger p-2 small text-center"><?php echo $error_msg; ?></div>
+                        <?php endif; ?>
+
+                        <?php if ($success_msg): ?>
+                            <div class="alert alert-success p-3 text-center"><?php echo $success_msg; ?></div>
+                        <?php endif; ?>
+
+                        <button type="submit" class="login-submit">Login <i class="ri-arrow-right-circle-fill"></i></button>
+                        <p class="login-sign">Don't have an account? <a href="#" style="font-family: Poppins, sans-serif; color: blueviolet; font-weight: 600;">Sign up</a></p>
+                    </div>
+                </form>
+            </div>
+              
+            <p class="footom">Log in into SkarlaCTF</p>
+        </div>
+    </section>
+
+    <script>
+        function showLogin() {
+            const welcome = document.getElementById('welcome-screen');
+            const login = document.getElementById('login-screen');
+
+            // Fade out welcome screen
+            welcome.style.transition = "0.5s";
+            welcome.style.opacity = "0";
+            welcome.style.transform = "translateY(-20px)";
+
+            setTimeout(() => {
+                welcome.style.display = 'none';
+                
+                // Fade in login screen
+                login.style.display = 'block';
+                setTimeout(() => {
+                    login.style.transition = "0.5s";
+                    login.style.opacity = '1';
+                    login.style.transform = "translateY(0)";
+                }, 50);
+            }, 500);
+        }
+    </script>
+</body>
+</html>

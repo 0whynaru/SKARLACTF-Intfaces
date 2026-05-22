@@ -1,0 +1,193 @@
+<!-- <?php
+session_start();
+
+$host = "localhost";
+$user_db = "dbuser";
+$pass_db = "dbpass";
+$name_db = "ctf_db";
+
+$conn = mysqli_connect($host, $user_db, $pass_db, $name_db);
+
+if (!$conn) {
+    die("Koneksi Database Gagal: " . mysqli_connect_error());
+}
+
+$error_msg = "";
+
+if (isset($_POST['login'])) {
+
+    $user = $_POST['username'];
+    $pass = $_POST['password'];
+    $sql = "SELECT id, username FROM users WHERE username=? AND password=?";
+    $stmt = mysqli_prepare($conn, $sql);
+    mysqli_stmt_bind_param($stmt , 'ss', $user, $pass);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION['user_id'] = $row['id'];
+        $_SESSION['username'] = $row['username'];
+
+        header("Location: dashboard.php?id=" . $row['id']);
+        exit();
+    } else {
+        $error_msg = "Username atau Password salah.";
+    }
+}
+?> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="/assets/images/aus.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css">
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="/assets/script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKARLACTF - Login</title>
+</head>
+<body>
+<div id="intro">
+
+  <!-- partikel -->
+  <div class="pt" style="width:4px;height:4px;left:12%;bottom:-5px;--d:9s;--dl:0s"></div>
+  <div class="pt" style="width:3px;height:3px;left:27%;bottom:-5px;--d:12s;--dl:1.5s"></div>
+  <div class="pt" style="width:5px;height:5px;left:48%;bottom:-5px;--d:8s;--dl:.7s"></div>
+  <div class="pt" style="width:2px;height:2px;left:65%;bottom:-5px;--d:14s;--dl:2.3s"></div>
+  <div class="pt" style="width:4px;height:4px;left:82%;bottom:-5px;--d:10s;--dl:.2s"></div>
+  <div class="pt" style="width:3px;height:3px;left:57%;bottom:-5px;--d:7s;--dl:3.1s"></div>
+  <div class="pt" style="width:2px;height:2px;left:20%;bottom:-5px;--d:11s;--dl:.9s"></div>
+
+  <div class="halo"></div>
+  <div class="halo"></div>
+  <div class="halo"></div>
+  <div id="logo-wrap">
+    <img id="logo-img"
+         src="assets/images/aus.png"
+         alt="Logo">
+  </div>
+
+  <div id="intro-text">
+
+  </div>
+</div>
+<div id="main">
+    <section id="csa" class="login" style="opacity: 1; filter: blur(0px);">
+        <div  class="login-page" >
+            <div id="welcome-screen">
+                <img class="images-welcome" src="/assets/images/aus.png" alt="skarla">
+                <h1 class="title-login">Hack. Learn.</h1>
+                <h1 class="title1-login">Capture the Flag.</h1>
+                <div class="warning-badge">Cryptograph</div>
+                <div class="warning-badge">PWN</div>
+                <div class="warning-badge">Forensics</div>
+                <p class="title2-login">Sharpen your skills, Challenge your limits. and become The real hackers</p>
+                <div class="login-group">
+                    <button class="login-submit" onclick="showLogin()">Login <i class="ri-login-box-line"></i></button>
+                    <button class="login-submit" onclick="signUp()" style="background: transparent; border: 1.5px solid rgb(2, 171, 255); color: white;">Register <i class="ri-user-add-fill"></i></button>
+                </div>
+            </div>
+            <div id="login-screen" style="display: none; opacity: 0;">
+                <img class="images" src="/assets/images/aus.png" alt="skarla">
+                <h1 class="title-login">Welcome back!</h1>
+                <p class="title2-login">Login to continue your hacking journey</p>
+                <form action="#" method="post">
+                    <div class="login-group">
+                        <div class="login-user">
+                            <p class="subtitle">Username</p>
+                            <i class="ri-shield-user-fill icon-login"></i>
+                            <input type="text" required placeholder=" " name="username" class="login-users" oninvalid="this.setCustomValidity('Username mu kosong kocak')" oninput="this.setCustomValidity('')">
+                            <label class="login-label">Username</label>
+                        </div>
+                        <div class="login-pswd">
+                            <p class="subtitle">Password</p>
+                            <i class="ri-lock-password-fill icon-login"></i>
+                            <input type="password" required placeholder=" " name="password" id="password" class="login-users">
+                            <label class="login-label">Password</label>
+                            <i class="ri-eye-line show-password iconps-login" id="togglePassword"></i>
+                        </div>
+                        <?php if ($error_msg): ?>
+                            <div class="alert alert-danger p-2 small text-center"><?php echo $error_msg; ?></div>
+                        <?php endif; ?>
+
+                        <button type="submit" class="login-submit">Login <i class="ri-arrow-right-circle-fill"></i></button>
+                        <p class="login-sign">Don't have an account? <a href="singup.html"" style="font-family: Poppins, sans-serif; color: blueviolet; font-weight: 600;">Sign up</a></p>
+                    </div>
+                </form>
+            </div>
+            
+            <p class="footom">Log in into SkarlaCTF</p>
+        </div>
+    </section>
+
+    <script>
+    
+
+  const intro = document.getElementById('intro');
+  const main  = document.getElementById('main');
+
+  function masuk() {
+    intro.classList.add('fade-out');
+    setTimeout(() => {
+      intro.style.display = 'none';
+      main.classList.add('visible');
+    }, 150);
+  }
+
+  // otomatis masuk setelah 4.5 detik, atau klik/tap intro untuk skip
+  setTimeout(masuk, 500);
+  intro.addEventListener('click', masuk);
+
+        const togglePassword = document.getElementById("togglePassword");
+        const password = document.getElementById("password");
+
+        togglePassword.addEventListener("click", () => {
+
+            const type = password.getAttribute("type") === "password"
+                ? "text"
+                : "password";
+            password.setAttribute("type", type);
+
+            togglePassword.classList.toggle("ri-eye-line");
+            togglePassword.classList.toggle("ri-eye-off-line");
+        });
+        const signup = document.getElementsByClassName('');
+        function signUp() {
+            window.location.href = "singup.html"; 
+        }
+        async function showLogin() {
+            const fd = document.getElementById('csa')
+            const welcome = document.getElementById('welcome-screen');
+            const login = document.getElementById('login-screen');
+            welcome.style.transition = "all 0.5s ease, opacity 0.5s ease, transform 0.5s ease";
+            fd.style.transition = "opacity 0.5s ease, filter 0.1s ease";
+            welcome.style.opacity = "0";;
+            welcome.style.transform = "translateY(-20px)";
+            fd.style.filter = "blur(5px)";
+            fd.style.opacity = "0"
+            setTimeout(() => {
+                welcome.style.display = 'none';
+                login.style.display = 'block';
+                fd.style.opacity = "0"
+                fd.style.filter = "blur(5px)";
+                setTimeout(() => {
+                    fd.style.transition = "opacity 1s ease, filter 3s ease";
+                    fd.style.opacity = "1"
+                    
+                    fd.style.transition = "opacity 0.5s ease";
+                    login.style.transition = "all 0.5s ease, opacity 0.5s ease, transform 0.5s ease";
+                    login.style.opacity = '1';
+                    login.style.transform = "translateY(0)";
+                    fd.style.filter = "blur(0px)";
+                }, 10);
+            }, 100);
+
+        }
+    </script>
+</body>
+</html>
