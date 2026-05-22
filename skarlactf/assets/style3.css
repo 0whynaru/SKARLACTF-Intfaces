@@ -1,0 +1,347 @@
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body.no-scroll {
+    overflow: hidden;
+}
+  :root {
+    --navy-deep:  #080e1d;
+    --navy-mid:   #0c1630;
+    --blue-glow:  #1e4fa0;
+    --blue-light: #4a7fd4;
+    --blue-pale:  #a8c4f0;
+    --white:      #eef3fc;
+  }
+
+html, body { 
+  width: 100%; 
+  min-height: 100%; /* Menggunakan min-height agar halaman fleksibel */
+  font-family: Poppins; 
+  background: linear-gradient(
+    var(--navy-deep) 0%,
+    var(--navy-mid) 45%,
+    #0b1838 75%,
+    #08122a 100%);
+  
+}
+
+  /* ══════════════ INTRO ══════════════ */
+  #intro {
+    position: fixed; inset: 0; z-index: 10;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: radial-gradient(ellipse at 35% 45%, #0d1f48 0%, #06091a 60%, #020408 100%);
+    cursor: pointer;
+    transition: opacity 1.3s ease;
+  }
+  #intro.fade-out { opacity: 0; pointer-events: none; }
+
+  /* partikel mengambang */
+  .pt {
+    position: absolute; border-radius: 50%;
+    background: var(--blue-glow); opacity: 0;
+    animation: floatUp var(--d) ease-in infinite var(--dl);
+  }
+  @keyframes floatUp {
+    0%   { opacity:0;    transform: translateY(0) scale(.5); }
+    15%  { opacity:.4; }
+    85%  { opacity:.1; }
+    100% { opacity:0;    transform: translateY(-110vh) scale(1.3); }
+  }
+
+  /* cincin halo */
+  .halo {
+    position: absolute; border-radius: 50%;
+    border: 1px solid rgba(74,127,212,.15);
+    animation: pulse 3.2s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .halo:nth-child(1) { width:300px; height:300px; }
+  .halo:nth-child(2) { width:420px; height:420px; animation-delay:.7s; border-color:rgba(74,127,212,.08); }
+  .halo:nth-child(3) { width:550px; height:550px; animation-delay:1.4s; border-color:rgba(74,127,212,.04); }
+  @keyframes pulse {
+    0%,100% { transform:scale(1);    opacity:1; }
+    50%      { transform:scale(1.05); opacity:.5; }
+  }
+
+  /* logo */
+  #logo-wrap {
+    position: relative;
+    opacity: 0;
+    animation: logoIn 1.8s cubic-bezier(.22,1,.36,1) .5s forwards;
+  }
+  @keyframes logoIn {
+    0%   { opacity:0; transform:scale(.65) translateY(28px); }
+    65%  { opacity:1; transform:scale(1.04) translateY(-5px); }
+    100% { opacity:1; transform:scale(1) translateY(0); }
+  }
+
+  #logo-img {
+    width: 190px; height: 190px;
+    object-fit: contain;
+    filter:
+      drop-shadow(0 0 30px rgba(74,127,212,.75))
+      drop-shadow(0 0 70px rgba(30,79,160,.45));
+  }
+
+  .sc {
+    border: 1px solid rgb(120, 51, 184);
+    border-radius: 2px;
+    padding: 10px 12px;
+    text-decoration: none;
+    font-weight: 400;
+    color: #98b3e0;
+    background-color: #0b1e4b;
+    transition: all 0.5s ease;
+  }
+  .sc:hover {
+    border: 1px solid rgb(134, 60, 203);
+    border-radius: 2px;
+    padding: 10px 12px;
+    text-decoration: none;
+    font-weight: 400;
+    color: #a1beef;
+    background-color: #0f2a68;
+    transition: all 0.5s ease;
+  }
+
+  /* teks bawah logo */
+  #intro-text {
+    margin-top: 44px; text-align: center;
+    opacity: 0;
+    animation: fadeUp 1.1s ease 2.3s forwards;
+  }
+  #intro-text h2 {
+    font-family: Poppins, serif;
+    font-weight: 300; font-size: clamp(1.4rem,3vw,2rem);
+    letter-spacing: .28em; color: var(--blue-pale);
+  }
+  #intro-text p {
+    margin-top: 8px; font-size: .68rem;
+    letter-spacing: .32em; text-transform: uppercase;
+    color: rgba(168,196,240,.4);
+  }
+
+  /* hint bawah */
+  #hint {
+    position: absolute; bottom: 44px;
+    font-size: .62rem; letter-spacing: .35em;
+    text-transform: uppercase; color: rgba(168,196,240,.3);
+    opacity: 0;
+    animation: fadeUp 1s ease 3.7s forwards;
+  }
+  #hint span { animation: blink 1.7s ease infinite; }
+  @keyframes blink { 0%,100%{opacity:.3} 50%{opacity:1} }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(16px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+#main {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    opacity: 0;
+    pointer-events: none;
+    background: linear-gradient(140deg,
+        var(--navy-deep) 0%,
+        var(--navy-mid) 45%,
+        #0b1838 75%,
+        #08122a 100%);
+    transition: opacity 1.3s ease;
+}
+.text-galer {
+  color: white;
+  margin: 2rem;
+}
+
+.title {
+  margin: 2rem;
+  color: white;
+}
+
+.paragraph {
+  color: white;
+  width: 95%;          
+  max-width: 700px;    /* Batas maksimum agar tidak terlalu lebar di desktop */
+  font-weight: 400;
+  margin: 0 auto;      /* Tengah-kan secara horizontal */
+  box-sizing: border-box;
+}
+.section-gallery {
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background: #08122a;
+    display: flex;
+    justify-content: center;
+    padding: 60px 24px;
+}
+
+.imae {
+    width: 80%;
+    max-width: 700px;
+    border-radius: 12px;
+    display: block;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease;
+    cursor: pointer;
+}
+
+.imae.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.imae:hover {
+
+  width: 81%;
+  max-width: 800px;
+}
+
+  #main.visible { opacity:1; pointer-events:all; }
+
+  #main::before {
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:
+      radial-gradient(ellipse 55% 50% at 78% 18%, rgba(30,79,160,.2) 0%, transparent 70%),
+      radial-gradient(ellipse 45% 55% at 12% 82%, rgba(8,24,56,.4) 0%, transparent 70%);
+
+  }
+
+  /* garis grid tipis */
+  .gl { position:absolute; background:rgba(74,127,212,.05); pointer-events:none; }
+  .gl.h { width:100%; height:1px; }
+  .gl.v { width:1px; height:100%; }
+
+  /* sudut dekoratif */
+  .corner {
+    position:absolute; width:48px; height:48px; opacity:.22;
+  }
+  .corner.tl { top:24px;    left:24px;    border-top:1px solid var(--blue-light); border-left:1px solid var(--blue-light); }
+  .corner.tr { top:24px;    right:24px;   border-top:1px solid var(--blue-light); border-right:1px solid var(--blue-light); }
+  .corner.bl { bottom:24px; left:24px;    border-bottom:1px solid var(--blue-light); border-left:1px solid var(--blue-light); }
+  .corner.br { bottom:24px; right:24px;   border-bottom:1px solid var(--blue-light); border-right:1px solid var(--blue-light); }
+
+  /* hero */
+  .hero {
+    position: absolute;   /* <-- ini kuncinya */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 0 24px;
+    width: 100%;
+}
+  /* logo kecil di main */
+  .mini-logo {
+    width:72px; height:72px; object-fit:contain;
+    filter: drop-shadow(0 0 12px rgba(74,127,212,.6));
+    margin-bottom:28px;
+    opacity:0; transform:translateY(-10px);
+    transition: opacity .9s ease .3s, transform .9s ease .3s;
+  }
+  #main.visible .mini-logo { opacity:1; transform:translateY(0); }
+
+  .welcome-eyebrow {
+    font-size:.62rem; letter-spacing:.48em; text-transform:uppercase;
+    color:var(--blue-light); margin-bottom:14px;
+    opacity:0; transform:translateY(12px);
+    transition: opacity .8s ease .5s, transform .8s ease .5s;
+  }
+  #main.visible .welcome-eyebrow { opacity:1; transform:translateY(0); }
+
+  .welcome-title {
+    font-family:Poppins, serif;
+    font-weight:600;  font-size: clamp(2rem, 5vw + 1rem, 5.2rem);
+    letter-spacing:.05em; line-height:1.1; color:var(--white);
+    opacity:0; transform:translateY(18px);
+    transition: opacity 1s ease .62s, transform 1s ease .62s;
+  }
+  #main.visible .welcome-title { opacity:1; transform:translateY(0); }
+
+  
+  .welcome-sub {
+    margin-top:18px; font-size:.75rem;
+    letter-spacing:.24em; text-transform:uppercase;
+    color:rgba(168,196,240,.45);
+    opacity:0; transform:translateY(12px);
+    transition: opacity .9s ease .8s, transform .9s ease .8s;
+  }
+  #main.visible .welcome-sub { opacity:1; transform:translateY(0); }
+
+  .divider {
+    width:0; height:1px; margin:32px auto;
+    background: linear-gradient(90deg, transparent, var(--blue-glow), transparent);
+    transition: width 1.2s ease 1s;
+  }
+
+
+  #main.visible .divider { width:160px; }
+  #main.visible .divider1 { width:160px; }
+  .cta {
+    display:inline-block; padding:13px 42px;
+    border:1px solid rgba(74,127,212,.4); border-radius:2px;
+    font-family: Poppins,sans-serif; font-size:.68rem;
+    letter-spacing:.38em; text-transform:uppercase;
+    color:var(--blue-pale); background:rgba(30,79,160,.1);
+    text-decoration:none; cursor:pointer;
+    opacity:0; transform:translateY(12px);
+    transition:
+      opacity .9s ease 1.15s, transform .9s ease 1.15s, background-color .3s,background-image .3s, border-color .3s, color .3s;
+  }
+  #main.visible .cta { opacity:1; transform:translateY(0); }
+  .cta:hover {
+    background:rgba(30,79,160,.28);
+    border-color:rgba(74,127,212,.8);
+    color:var(--white);
+  }
+    .warning-badge {
+    display: inline-block;
+    background: rgba(242, 212, 253, 0.12);
+    border: 1px solid rgba(226, 209, 255, 0.3);
+    color: #e5e4f6;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-family: Poppins, sans-serif;
+    margin-top: 1rem;
+    transition: all 0.3s ease-in-out;
+    }
+    .warning-badges {
+    position: relative;
+    top: -20px;
+    display: inline-block;
+    background: rgba(242, 212, 253, 0.12);
+    border: 1px solid rgba(226, 209, 255, 0.3);
+    color: #e5e4f6;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-family: Poppins, sans-serif;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease-in-out;
+    }
+
+  .alert-box {
+        display: none; /* Tersembunyi secara default */
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #ff3333;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        font-family: sans-serif;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        z-index: 999999; /* Memastikan selalu di posisi paling depan */
+        animation: fadeIn 0.3s ease-in-out;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
